@@ -17,7 +17,7 @@ template <class BagType>
 bool ArrayBag<BagType>::Add(const BagType& entry) {
   bool room_to_add = (bag_count_ < bag_max_items_);
     if(room_to_add) {
-      bag[bag_count_] = entry;
+      bag_[bag_count_] = entry;
       bag_count_++;
     }
     return room_to_add;
@@ -28,7 +28,7 @@ bool ArrayBag<BagType>::Remove(const BagType& entry) {
   int remove_index = GetIndexOf(entry);
   bool remove_allowed = !IsEmpty() && (remove_index > -1);
   if (remove_allowed) {
-    bag[remove_index] = bag[bag_count_ - 1];
+    bag_[remove_index] = bag_[bag_count_ - 1];
     bag_count_--;
   }
   return remove_allowed;
@@ -42,7 +42,7 @@ void ArrayBag<BagType>::Clear() {
 template <class BagType>
 bool ArrayBag<BagType>::Contains(const BagType& entry) const {
   for(int i = 0; i < bag_count_; ++i) {
-    if (bag[i] == entry)
+    if (bag_[i] == entry)
       return true;
   }
   return false;
@@ -53,7 +53,7 @@ int ArrayBag<BagType>::GetFrequencyOf(const BagType& entry) const {
   int frequency = 0;
   int current_index = 0;
   while (current_index < bag_count_) {
-    if (bag[current_index] == entry)
+    if (bag_[current_index] == entry)
      frequency++;
     current_index++;
   }
@@ -72,7 +72,7 @@ std::vector<BagType> ArrayBag<BagType>::ToVector() const {
 template <class BagType>
 int ArrayBag<BagType>::GetIndexOf(const BagType& target) const {
   for(int i = 0; i < bag_count_; ++i) {
-    if (bag[i] == target)
+    if (bag_[i] == target)
       return i;
   }
   return -1;

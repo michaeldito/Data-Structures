@@ -18,7 +18,7 @@ class ArrayBag : public BagInterface<BagType> {
 
  private:
    static const int kDefaultCapacity_ = 10;
-   BagType bag[kDefaultCapacity_];
+   BagType bag_[kDefaultCapacity_];
    int bag_count_;
    int bag_max_items_;
 
