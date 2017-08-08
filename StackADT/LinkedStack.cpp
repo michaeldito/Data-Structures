@@ -1,4 +1,3 @@
-#include <cassert>
 #include "LinkedStack.hpp"
 
 template <class StackType>
@@ -43,6 +42,10 @@ LinkedStack<StackType>::~LinkedStack() {
 template <class StackType>
 bool LinkedStack<StackType>::Push(const StackType& entry) {
   Node<StackType>* new_node_ptr = new Node<StackType>(entry, top_);
+  if (new_node_ptr == nullptr) {
+    throw MemoryAllocationExcept("Push() called when memory is full. Cannot push to stack.")
+    return false;
+  }
   top_ = new_node_ptr;
   new_node_ptr = nullptr;
   return true;
@@ -67,8 +70,10 @@ bool LinkedStack<StackType>::Pop() {
 
 template <class StackType>
 StackType LinkedStack<StackType>::Peek() const {
-  assert(!IsEmpty()); // Enforce precondition
-  return top_->GetData();
+  if (!IsEmpty()); // Enforce precondition
+    throw PrecondViolatedExcept("Peek() called with empty stack")
+  else
+    return top_->GetData();
 }
 
 

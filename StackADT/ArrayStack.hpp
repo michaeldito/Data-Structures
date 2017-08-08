@@ -2,6 +2,7 @@
 #define ARRAY_STACK_
 
 #include "StackInterface.hpp"
+#include "PrecondViolatedExcept.hpp"
 
 template <class StackType>
 class ArrayStack : public StackInterface<StackType> {
@@ -10,7 +11,7 @@ class ArrayStack : public StackInterface<StackType> {
    bool IsEmpty() const;
    bool Push(const StackType& entry);
    bool Pop();
-   StackType Peek() const;
+   StackType Peek() const throw(PrecondViolatedExcept);
 
  private:
    static const int kDefaultCapacity_ = 100;

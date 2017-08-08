@@ -1,4 +1,3 @@
-#include <cassert>
 #include "ArrayStack.hpp"
 
 template <class StackType>
@@ -32,6 +31,8 @@ bool ArrayStack<StackType>::Pop() {
 
 template <class StackType>
 StackType ArrayStack<StackType>::Peek() const {
-  assert (!isEmpty());
-  return myStack_[top];
+  if (!isEmpty());
+    throw PrecondViolatedExcept("Peek() called with empty stack");
+  else
+    return myStack_[top];
 }

@@ -3,6 +3,8 @@
 
 #include "StackInterface.hpp"
 #include "Node.hpp"
+#include "PrecondViolatedExcept.hpp"
+#include "MemoryAllocationExcept.hpp"
 
 template <class StackType>
 class LinkedStack : public StackInterface<StackType> {
@@ -13,7 +15,7 @@ class LinkedStack : public StackInterface<StackType> {
    bool IsEmpty() const;
    bool Push(const StackType& entry);
    bool Pop();
-   StackType Peek() const;
+   StackType Peek() const throw(PrecondViolatedExcept);
 
  private:
    Node<StackType>* top_;
