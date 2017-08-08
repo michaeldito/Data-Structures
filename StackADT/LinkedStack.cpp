@@ -1,14 +1,16 @@
 #include "LinkedStack.hpp"
 
 template <class StackType>
-LinkedStack<StackType>::LinkedStack(): top_(nullptr) {}
+LinkedStack<StackType>::LinkedStack(): top_(nullptr), size_(0) {}
 
 template <class StackType>
 LinkedStack<StackType>::LinkedStack(const LinkedStack<StackType>& aStack) {
   Node<StackType>* original_chain_ptr = aStack.top_;
   if (original_chain_ptr == nullptr) {
     top_ = nullptr; // Original stack is empty.
+    size_ = 0;
   } else {
+    size_ = aStack.size_;
     // Copy first node.
     top_ = new Node<StackType>();
     top_->SetData(original_chain_ptr->GetData());
@@ -40,13 +42,16 @@ LinkedStack<StackType>::~LinkedStack() {
 }
 
 template <class StackType>
-bool LinkedStack<StackType>::Push(const StackType& entry) {
+bool LinkedStack<StackType>::Push(const StackType& entry) throw(MemoryAllocationExcept){
   Node<StackType>* new_node_ptr = new Node<StackType>(entry, top_);
+// Node<StackType>* new_node_ptr = nullptr;
+// ^uncomment to test MemoryAllocationExcept
   if (new_node_ptr == nullptr) {
-    throw MemoryAllocationExcept("Push() called when memory is full. Cannot push to stack.")
+    throw MemoryAllocationExcept();
     return false;
   }
   top_ = new_node_ptr;
+  size_++;
   new_node_ptr = nullptr;
   return true;
 }
@@ -63,15 +68,17 @@ bool LinkedStack<StackType>::Pop() {
     delete node_to_delete;
     node_to_delete = nullptr;
 
+    size_--;
+
     result = true;
   }
   return result;
 }
 
 template <class StackType>
-StackType LinkedStack<StackType>::Peek() const {
-  if (!IsEmpty()); // Enforce precondition
-    throw PrecondViolatedExcept("Peek() called with empty stack")
+StackType LinkedStack<StackType>::Peek() const throw(PrecondViolatedExcept) {
+  if (IsEmpty())
+    throw PrecondViolatedExcept("Peek() called with empty stack");
   else
     return top_->GetData();
 }
@@ -79,5 +86,10 @@ StackType LinkedStack<StackType>::Peek() const {
 
 template <class StackType>
 bool LinkedStack<StackType>::IsEmpty() const {
-  return top_ == nullptr;
+  return top_ == nullptr && size_ == 0;;
+}
+
+template <class StackType>
+int LinkedStack<StackType>::GetSize() const {
+  return size_;
 }

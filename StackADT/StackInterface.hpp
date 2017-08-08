@@ -1,5 +1,5 @@
 #ifndef STACK_INTERFACE_
-#define STACK_INTERFACE
+#define STACK_INTERFACE_
 
 template <class StackType>
 class StackInterface {
@@ -8,6 +8,7 @@ class StackInterface {
    virtual bool Push(const StackType & entry) = 0;
    virtual bool Pop() = 0;
    virtual StackType Peek() const = 0;
+   virtual int GetSize() const = 0;
    virtual ~StackInterface() {}
 };
 
