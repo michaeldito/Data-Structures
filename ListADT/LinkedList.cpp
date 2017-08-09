@@ -2,10 +2,10 @@
 #include <cassert>
 
 template <class ListType>
-LinkedList::LinkedList(): head_(nullptr), list_count_(0) {}
+LinkedList<ListType>::LinkedList(): head_(nullptr), list_count_(0) {}
 
 template <class ListType>
-LinkedList::LinkedList(const LinkedList<ListType>& L) {
+LinkedList<ListType>::LinkedList(const LinkedList<ListType>& L) {
   list_count_ = L.list_count_;
   Node<ListType>* original_chain_ptr = L.head_;
   if (original_chain_ptr == nullptr) {
@@ -36,22 +36,22 @@ LinkedList::LinkedList(const LinkedList<ListType>& L) {
 }
 
 template <class ListType>
-LinkedList::~LinkedList() {
+LinkedList<ListType>::~LinkedList() {
   Clear();
 }
 
 template <class ListType>
-bool LinkedList::IsEmpty() const {
+bool LinkedList<ListType>::IsEmpty() const {
   return list_count_ == 0 && head_ == nullptr;
 }
 
 template <class ListType>
-int LinkedList::GetLength() const {
+int LinkedList<ListType>::GetLength() const {
   return list_count_;
 }
 
 template <class ListType>
-bool LinkedList::Insert(int position, const ListType& entry) {
+bool LinkedList<ListType>::Insert(int position, const ListType& entry) {
   bool able_to_insert = (position >= 1) && (position <= list_count_ + 1);
   if (able_to_insert) {
     // Create a new node containing the new entry
@@ -72,7 +72,7 @@ bool LinkedList::Insert(int position, const ListType& entry) {
 }
 
 template <class ListType>
-bool LinkedList::Remove(int position) {
+bool LinkedList<ListType>::Remove(int position) {
   bool able_to_remove = (position >= 1) && (position <= list_count_);
   if (able_to_remove) {
     Node<ListType>* current = nullptr;
@@ -83,7 +83,7 @@ bool LinkedList::Remove(int position) {
     } else {
         Node<ListType>* prev = GetNodeAt(position - 1);
         current = prev->GetNext();
-        prev = SetNext(current->GetNext());
+        prev->SetNext(current->GetNext());
     }
     // Return node to memory
     current->SetNext(nullptr);
@@ -96,13 +96,13 @@ bool LinkedList::Remove(int position) {
 }
 
 template <class ListType>
-void LinkedList::Clear() {
+void LinkedList<ListType>::Clear() {
   while (!IsEmpty())
     Remove(1);
 }
 
 template <class ListType>
-ListType LinkedList::GetEntry(int position) const throw(PrecondViolatedExcept) {
+ListType LinkedList<ListType>::GetEntry(int position) const throw(PrecondViolatedExcept) {
   // Enforce Precondition
   bool able_to_get = (position >= 1) && (position <= list_count_);
   if (able_to_get) {
@@ -115,7 +115,7 @@ ListType LinkedList::GetEntry(int position) const throw(PrecondViolatedExcept) {
 }
 
 template <class ListType>
-ListType LinkedList::Replace(int position, const ListType& entry) const throw(PrecondViolatedExcept) {
+ListType LinkedList<ListType>::Replace(int position, const ListType& entry) throw(PrecondViolatedExcept) {
   // Enforce Precondition
   bool able_to_set = (position >= 1) && (position <= list_count_);
   if (able_to_set) {
@@ -133,7 +133,7 @@ ListType LinkedList::Replace(int position, const ListType& entry) const throw(Pr
 }
 
 template <class ListType>
-Node<ListType>* LinkedList::GetNodeAt(int position) const {
+Node<ListType>* LinkedList<ListType>::GetNodeAt(int position) const {
   assert((position >= 1) && (position <= list_count_));
   // Count from the beginning of the chain
   Node<ListType>* current = head_;
