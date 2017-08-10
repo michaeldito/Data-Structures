@@ -1,5 +1,7 @@
 #include "ArrayList.hpp"
 #include "LinkedList.hpp"
+#include "LinkedListV2.hpp"
+
 #include <iostream>
 
 using std::cout;
@@ -12,8 +14,8 @@ void print(ListInterface<int>* list) {
 }
 
 int main() {
-//  ListInterface<int>* list = new ArrayList<int>();
-  ListInterface<int>* list = new LinkedList<int>();
+  ListInterface<int>* list = new ArrayList<int>();
+//  ListInterface<int>* list = new LinkedList<int>();
 
   for (int i = 1; i < 10; ++i)
     list->Insert(i, i);
@@ -47,11 +49,19 @@ int main() {
   cout << "Printing: ";
   print(list);
 
-  cout << "Replacing 3 and 7...\n";
-  int nv = list->Replace(2, 100);
-  cout << nv << ',';
-  nv = list->Replace(4, 100);
-  cout << nv << ',';
+  try{
+    cout << "Replacing 3 and 7...\n";
+    int nv = list->Replace(2, 100);
+    cout << nv << ',';
+    nv = list->Replace(4, 100);
+    cout << nv << ',';
+    nv = list->Replace(10, 100);
+    cout << nv << ',';
+  }
+  catch(PrecondViolatedExcept e){
+    cout << e.what();
+  }
+
   cout << "\nPrinting: ";
   print(list);
 

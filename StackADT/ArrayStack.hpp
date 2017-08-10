@@ -13,12 +13,13 @@ class ArrayStack : public StackInterface<StackType> {
    bool Pop();
    StackType Peek() const throw(PrecondViolatedExcept);
    int GetSize() const;
-   
+
  private:
-   static const int kDefaultCapacity_ = 100;
-   StackType myStack_[kDefaultCapacity_];
+   static const int kDefaultCapacity_ = 2;
+   StackType* myStack_;
    int top_;
    int size_;
+   int max_capacity_;
 };
 
 #include "ArrayStack.cpp"

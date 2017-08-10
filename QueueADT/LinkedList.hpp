@@ -1,28 +1,31 @@
-#ifndef ARRAY_LIST_
-#define ARRAY_LIST_
+#ifndef LINKED_LIST_
+#define LINKED_LIST_
 
 #include "ListInterface.hpp"
+#include "Node.hpp"
 #include "PrecondViolatedExcept.hpp"
-#include "MemoryAllocationExcept.hpp"
 
 template <class ListType>
-class ArrayList : public ListInterface<ListType> {
+class LinkedList : public ListInterface<ListType> {
  public:
-   ArrayList();
+   LinkedList();
+   LinkedList(const LinkedList<ListType>& L);
+   virtual ~LinkedList();
+
    bool IsEmpty() const;
    int GetLength() const;
-   bool Insert(int position, const ListType& entry) throw(MemoryAllocationExcept);
+   bool Insert(int position, const ListType& entry);
    bool Remove(int position);
    void Clear();
    ListType GetEntry(int position) const throw(PrecondViolatedExcept);
    ListType Replace(int position, const ListType& entry) throw(PrecondViolatedExcept);
 
  private:
-   static const int kDefaultCapacity_ = 100;
-   ListType* list_;
+   std::shared_ptr<Node<ListType>> head_;
    int list_count_;
-   int max_capacity_;
+
+   auto GetNodeAt(int position) const;
 };
 
-#include "ArrayList.cpp"
+#include "LinkedList.cpp"
 #endif
