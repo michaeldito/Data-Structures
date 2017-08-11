@@ -31,8 +31,6 @@ bool ArraySortedList<ListType>::InsertSorted(const ListType& entry) {
 	list_[idx] = entry;
 	list_count_++;
 
-  std::cout << "inserted " << entry << '\n';
-
 	return true;
 }
 

@@ -3,14 +3,15 @@
 #include "ArrayCircularQueue.hpp"
 #include "DynamicArrayCircularQueue.hpp"
 
+#include <iostream>
+
 using std::cout;
-using std::cerr;
 
 int main() {
-//  QueueInterface<int>* q = new ListQueue<int>();
-//  QueueInterface<int>* q = new LinkedQueue<int>();
-//  QueueInterface<int>* q = new ArrayCircularQueue<int>();
-  QueueInterface<int>* q = new DynamicArrayCircularQueue<int>();
+  QueueInterface<int>* q = new ListQueue<int>();
+  //QueueInterface<int>* q = new LinkedQueue<int>();
+  //QueueInterface<int>* q = new ArrayCircularQueue<int>();
+  //QueueInterface<int>* q = new DynamicArrayCircularQueue<int>();
 
   int add2q[] = { 4, 65, 3, 8, 9 , 23, 78, 99, 0, 11 };
 
@@ -24,12 +25,17 @@ int main() {
 
   cout << "\nCopying queue...\n";
   QueueInterface<int>* cp = q;
+
   if (cp->GetSize() == 10 && !(cp->IsEmpty()))
     cout << "Size == 10 && q not empty\n";
   cout << "Front of queue should be 4 - it is " << cp->PeekFront() << '\n';
 
+  cout << "q size = " << q->GetSize() << '\n';
   for (int i = 0; i < 10; ++i) {
     q->Dequeue();
+  }
+  cout << "cp size = " << cp->GetSize() << '\n';
+  for (int i = 0; i < 10; ++i) {
     cp->Dequeue();
   }
 

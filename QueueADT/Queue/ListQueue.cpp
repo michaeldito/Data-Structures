@@ -5,31 +5,35 @@ ListQueue<QueueType>::ListQueue(): list_ptr_(std::make_unique<LinkedList<QueueTy
 
 template <class QueueType>
 ListQueue<QueueType>::ListQueue(const ListQueue& Q) {
-  int count_ = Q.count_;
+  count_ = Q.count_;
+  // Point to Q's list
   auto original_chain_ptr = Q.list_ptr_;
   if (original_chain_ptr == nullptr) {
     list_ptr_ = nullptr;
   } else {
-    // Copy first node.
+    // Have the list_ptr_ point to a new node; give it data
     list_ptr_ = std::make_shared<Node<QueueType>>();
     list_ptr_->SetData(original_chain_ptr->GetData());
 
-    // Copy remaining nodes.
+    // Make a traversal pointer for our new chain
     auto new_chain_ptr = list_ptr_;
+    // Move the original_chain_ptr along
     original_chain_ptr = original_chain_ptr->GetNext();
-
-    // Copy remaining nodes.
-    for (int i = 1; i < list_ptr_->GetLength(); ++i) {
-      QueueType next_data = list_ptr_->GetEntry(i);
+    // for all other nodes in the chain to be copied
+    while (original_chain_ptr != nullptr) {
+      // get the next peice of data and make a node with it
+      QueueType next_data = original_chain_ptr->GetData();
       auto new_node_ptr = std::make_shared<Node<QueueType>>(next_data);
-      new_chain_ptr = new_chain_ptr->GetNext();
+      // make it new_node_ptrs next
+      new_chain_ptr->SetNext(new_node_ptr);
+      // move new and original chain pointers along
       original_chain_ptr = original_chain_ptr->GetNext();
+      new_chain_ptr = new_chain_ptr->GetNext();
     }
     // End the new chain.
     new_chain_ptr->SetNext(nullptr);
   }
 }
-// Shallow Copy... revise to deep Copy
 
 template <class QueueType>
 ListQueue<QueueType>::~ListQueue() {

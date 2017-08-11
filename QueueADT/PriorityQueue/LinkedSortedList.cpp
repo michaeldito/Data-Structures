@@ -94,7 +94,7 @@ ListType LinkedSortedList<ListType>::GetEntry(int position) const throw(PrecondV
     return node->GetData();
   } else {
     std::string message = "GetEntry() called with an empty list or invalid position.";
-    throw(PrecondViolatedExcept(message));
+    throw PrecondViolatedExcept(message);
   }
 }
 

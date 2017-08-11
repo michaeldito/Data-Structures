@@ -16,8 +16,8 @@ class ArrayCircularQueue : public QueueInterface<QueueType> {
   QueueType PeekFront() const throw(PrecondViolatedExcept);
 
  private:
-   int max_capacity_ = 10;
    QueueType* queue_;
+   int max_capacity_ = 10;
    int front_, back_, count_;
 };
 

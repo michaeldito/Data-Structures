@@ -7,7 +7,7 @@ using std::cerr;
 using std::string;
 
 // GetLength and GetEntry test
-void print(SortedListInterface<string>* list) {
+void print(SortedListInterface<int>* list) {
   for (int i = 1; i <= list->GetLength(); ++i)
       cout << list->GetEntry(i) << ',';
   cout << '\n';
@@ -16,13 +16,14 @@ void print(SortedListInterface<string>* list) {
 int main() {
   // Create names
   string names[6] = { "Joe", "Bob", "Tom", "Ally", "Camille", "Karen" };
+  int numbers[6] = {1, 2, 3, 4, 5, 6 };
   // Default constructor
-  //SortedListInterface<string>* list = new LinkedSortedList<string>();
-  SortedListInterface<string>* list = new ArraySortedList<string>();
+  SortedListInterface<int>* list = new LinkedSortedList<int>();
+  //SortedListInterface<string>* list = new ArraySortedList<string>();
 
   // Insert into list
   for (int i = 0; i < 6; ++i)
-    list->InsertSorted(names[i]);
+    list->InsertSorted(numbers[i]);
 
   cout << "GetLength = " << list->GetLength() << '\n';
 
@@ -37,14 +38,16 @@ int main() {
   if (!list->IsEmpty())
     print(list);
   // GetPosition test
-  cout << "Tom @ " << list->GetPosition("Tom") << '\n';
+//  cout << "Tom @ " << list->GetPosition("Tom") << '\n';
   // Remove test
-  cout << "Removing Tom...\n";
-  list->RemoveSorted("Tom");
-  print(list);
+//  cout << "Removing Tom...\n";
+//  list->RemoveSorted("Tom");
+//  cout << "Removing Camille...\n";
+//  list->RemoveSorted("Camille");
+//  print(list);
   // Copy constructor test
   cout << "Copying list and printing...\n";
-  SortedListInterface<string>* copy = list;
+  SortedListInterface<int>* copy = list;
   print(copy);
   // Clear test
   cout << "Clearing both lists...\n";
