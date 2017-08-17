@@ -3,32 +3,26 @@
 
 template <class QueueType>
 SortedListPriorityQueue<QueueType>::SortedListPriorityQueue():
-  sorted_list_ptr_(std::make_unique<LinkedSortedList<QueueType>>()) {}
+  sorted_list_ptr_(std::make_shared<LinkedSortedList<QueueType>>()) {}
 
 template <class QueueType>
 SortedListPriorityQueue<QueueType>::SortedListPriorityQueue(const SortedListPriorityQueue& pq) {
-  auto original_chain_ptr = pq.sorted_list_ptr_.head_;
+  auto original_chain_ptr = pq.sorted_list_ptr_;
   if (original_chain_ptr == nullptr) {
     sorted_list_ptr_ = nullptr;
   } else {
-    // Copy first node.
-    sorted_list_ptr_ = std::make_unique<Node<QueueType>>();
-    sorted_list_ptr_->SetData(original_chain_ptr->GetData());
+    // Initialize the sorted_list_ptr_
+    sorted_list_ptr_ = std::make_shared<LinkedSortedList<QueueType>>();
 
-    // Copy remaining nodes.
-    auto new_chain_ptr = sorted_list_ptr;
-    original_chain_ptr = original_chain_ptr->GetNext();
+    // Create a pointer to the sorted_list_ptr_
+    auto new_chain_ptr = sorted_list_ptr_;
 
-    for (int i = 2; i < sorted_list_ptr_->GetLength(); ++i) {
-      QueueType next_data = sorted_list_ptr_->GetEntry(i);
-      auto new_node_ptr = std::make_shared<Node<QueueType>>(next_data);
-      new_chain_ptr = new_chain_ptr->SetNext(new_node_ptr);
-
-      new_chain_ptr = new_chain_ptr->GetNext();
-      original_chain_ptr = original_chain_ptr->GetNext();
+    // Copy each nodes data in the original_chain_ptr and add it
+    // to the sorted_list_ptr_ chain
+    for (int i = 1; i <= original_chain_ptr->GetLength(); ++i) {
+      QueueType next_data = original_chain_ptr->GetEntry(i);
+      new_chain_ptr->InsertSorted(next_data);
     }
-    // End the new chain.
-    new_chain_ptr->SetNext(nullptr);
   }
 }
 

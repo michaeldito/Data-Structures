@@ -20,7 +20,7 @@ class ListQueue : public QueueInterface<QueueType> {
    QueueType PeekFront() const throw(PrecondViolatedExcept);
 
  private:
-   std::unique_ptr<LinkedList<QueueType>> list_ptr_;
+   std::shared_ptr<LinkedList<QueueType>> list_ptr_;
    int count_;
 };
 

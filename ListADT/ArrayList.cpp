@@ -38,15 +38,14 @@ bool ArrayList<ListType>::Insert(int position, const ListType& entry) throw(Memo
     // Copy all items into new larger array.
     max_capacity_ += max_capacity_ / 2;
     ListType* new_list = new ListType[max_capacity_ + 1];
+    if (new_list == nullptr) {
+      throw MemoryAllocationExcept();
+      return false;
+    }
     for (int i = 1; i <= list_count_; i++)
       new_list[i] = list_[i];
     delete [] list_;
     list_ = new_list;
-  }
-
-  if (new_list == nullptr) {
-    throw MemoryAllocationExcept();
-    return false;
   }
 
   return true;

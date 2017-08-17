@@ -20,7 +20,7 @@ class SortedListPriorityQueue : public PriorityQueueInterface<QueueType> {
   QueueType PeekFront() const throw(PrecondViolatedExcept);
 
  private:
-  std::unique_ptr<LinkedSortedList<QueueType>> sorted_list_ptr_;
+  std::shared_ptr<LinkedSortedList<QueueType>> sorted_list_ptr_;
 };
 
 #include "SortedListPriorityQueue.cpp"

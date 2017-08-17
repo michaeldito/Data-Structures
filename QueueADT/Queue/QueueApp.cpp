@@ -7,8 +7,17 @@
 
 using std::cout;
 
+void printAndDelete(ListQueue<int>& Q) {
+    while (!Q.IsEmpty()) {
+      int data = Q.PeekFront();
+      cout << data << ',';
+      Q.Dequeue();
+  }
+  cout << '\n';
+}
+
 int main() {
-  QueueInterface<int>* q = new ListQueue<int>();
+  ListQueue<int> q;
   //QueueInterface<int>* q = new LinkedQueue<int>();
   //QueueInterface<int>* q = new ArrayCircularQueue<int>();
   //QueueInterface<int>* q = new DynamicArrayCircularQueue<int>();
@@ -16,33 +25,41 @@ int main() {
   int add2q[] = { 4, 65, 3, 8, 9 , 23, 78, 99, 0, 11 };
 
   for (int i = 0; i < 10; ++i)
-    q->Enqueue(add2q[i]);
+    q.Enqueue(add2q[i]);
 
-  if (q->GetSize() == 10 && !(q->IsEmpty()))
+  if (q.GetSize() == 10 && !(q.IsEmpty()))
     cout << "Size == 10 && q not empty\n";
 
-  cout << "Front of queue should be 4 - it is " << q->PeekFront() << '\n';
+  cout << "Front of queue should be 4 - it is " << q.PeekFront() << '\n';
 
-  cout << "\nCopying queue...\n";
-  QueueInterface<int>* cp = q;
+  cout << "Copying queue...\n";
 
-  if (cp->GetSize() == 10 && !(cp->IsEmpty()))
+  ListQueue<int> cp = q;
+
+  if (cp.GetSize() == 10 && !(cp.IsEmpty()))
     cout << "Size == 10 && q not empty\n";
-  cout << "Front of queue should be 4 - it is " << cp->PeekFront() << '\n';
+  cout << "Front of queue should be 4 - it is " << cp.PeekFront() << '\n';
 
-  cout << "q size = " << q->GetSize() << '\n';
-  for (int i = 0; i < 10; ++i) {
-    q->Dequeue();
-  }
-  cout << "cp size = " << cp->GetSize() << '\n';
-  for (int i = 0; i < 10; ++i) {
-    cp->Dequeue();
-  }
+  cout << "q size = " << q.GetSize() << "; deleting q\n";
+  printAndDelete(q);
+  cout << "q size = " << q.GetSize() << '\n';
 
-  if (q->GetSize() == 0 && cp->GetSize() == 0)
+
+  if (q.GetSize() == 0 && cp.GetSize() == 10)
     cout << "Dequeue works ok\n";
+  else
+    cout << "uhoh\n";
 
-  cout << q->PeekFront();
+  cout << "cp size = " << cp.GetSize() << '\n';
+  printAndDelete(cp);
+  cout << "cp size = " << cp.GetSize() << '\n';
+
+  try {
+    cout << q.PeekFront();
+  }
+  catch (PrecondViolatedExcept e) {
+    cout << e.what() << '\n';
+  }
 
   return 0;
 }
