@@ -1,6 +1,7 @@
 # Data Structures in C++ from Data Abstraction and Problem Solving 7th Ed.
 
-All data structures are templated and written using C++ 14. Except those marked with *
+All data structures are templated and written using C++ 14, and require
+using g++ -std=c++14 to compile. Except those marked with *
 
 ## Bags
 - Array Bag
